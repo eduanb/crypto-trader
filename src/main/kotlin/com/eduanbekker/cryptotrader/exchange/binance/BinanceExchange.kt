@@ -9,4 +9,9 @@ class BinanceExchange(private val binanceApiRestClient: BinanceApiRestClient) : 
 	override fun getPrice(symbol: String) =
 			binanceApiRestClient.getPrice(symbol).price.toDouble()
 
+	override fun getBalance(symbol: String) =
+			binanceApiRestClient.account.getAssetBalance(symbol).free.toDouble()
+
+	override fun getSymbols() = binanceApiRestClient.exchangeInfo.symbols.map { it.symbol }
+
 }
