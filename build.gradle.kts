@@ -24,6 +24,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.github.binance-exchange:binance-java-api:master-SNAPSHOT")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("com.github.Kucoin:kucoin-java-sdk:master-SNAPSHOT")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {

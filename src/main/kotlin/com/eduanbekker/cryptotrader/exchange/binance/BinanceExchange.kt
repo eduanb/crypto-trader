@@ -24,15 +24,15 @@ class BinanceExchange(
 
 	override fun getSymbols() = binanceApiRestClient.exchangeInfo.symbols.map { it.symbol }
 
-	override fun marketBuyOrder(symbol: String, quantity: Double): Long =
-			binanceApiRestClient.newOrder(NewOrder.marketBuy(symbol, convertAndLog(symbol, quantity))
+	override fun marketBuyOrder(symbol: String, quantity: Double, price: Double?): String =
+			binanceApiRestClient.newOrder(NewOrder.marketBuy(symbol, quantity.toString())
 					.newOrderRespType(NewOrderResponseType.FULL))
-					.orderId
+					.orderId.toString()
 
-	override fun marketSellOrder(symbol: String, quantity: Double): Long =
-			binanceApiRestClient.newOrder(NewOrder.marketSell(symbol, convertAndLog(symbol, quantity))
+	override fun marketSellOrder(symbol: String, quantity: Double, price: Double?): String =
+			binanceApiRestClient.newOrder(NewOrder.marketSell(symbol, quantity.toString())
 					.newOrderRespType(NewOrderResponseType.FULL))
-					.orderId
+					.orderId.toString()
 
 	private fun convertAndLog(symbol: String, quantity: Double) =
 			converter(symbol).format(quantity).also { logger.info("Converted $quantity to $it") }

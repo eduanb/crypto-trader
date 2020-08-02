@@ -12,7 +12,7 @@ interface ExchangeApi {
 	 * @param quantity The quantity to order
 	 * @return OrderId
 	 */
-	fun marketBuyOrder(symbol: String, quantity: Double): Long
+	fun marketBuyOrder(symbol: String, quantity: Double, price: Double?): String
 
 	/**
 	 * Sells the symbol at the current market price
@@ -20,5 +20,5 @@ interface ExchangeApi {
 	 * @param quantity The quantity to order
 	 * @return OrderId
 	 */
-	fun marketSellOrder(symbol: String, quantity: Double): Long
+	fun marketSellOrder(symbol: String, quantity: Double, price: Double?): String
 }

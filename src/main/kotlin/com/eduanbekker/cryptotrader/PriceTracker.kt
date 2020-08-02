@@ -3,6 +3,7 @@ package com.eduanbekker.cryptotrader
 import com.eduanbekker.cryptotrader.domain.Price
 import com.eduanbekker.cryptotrader.domain.PriceRepository
 import com.eduanbekker.cryptotrader.exchange.ExchangeApi
+import javassist.compiler.ast.Symbol
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled

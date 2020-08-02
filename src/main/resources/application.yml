@@ -1,10 +1,17 @@
 exchange:
   binance:
     enabled: true
+  kucoin:
+    enabled: false
 
 binance:
   key:
   secret:
+
+kucoin:
+  key:
+  secret:
+  passphrase:
 
 config:
   symbols:
