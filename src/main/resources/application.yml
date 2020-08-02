@@ -1,0 +1,22 @@
+exchange:
+  binance:
+    enabled: true
+
+binance:
+  key:
+  secret:
+
+config:
+  symbols:
+    - BTCUSDT
+    - ETHUSDT
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: mysecretpassword
+    url: jdbc:postgresql://localhost:5432/crypto-trader
+    username: crypto-trader
+  jpa:
+    hibernate:
+      ddl-auto: update
