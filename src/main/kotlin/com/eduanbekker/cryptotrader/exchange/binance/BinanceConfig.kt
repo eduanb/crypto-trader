@@ -2,7 +2,7 @@ package com.eduanbekker.cryptotrader.exchange.binance
 
 import com.binance.api.client.BinanceApiClientFactory
 import com.binance.api.client.BinanceApiRestClient
-import com.binance.api.client.domain.general.FilterType
+import com.eduanbekker.cryptotrader.domain.LotSizeRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.math.RoundingMode
@@ -18,15 +18,13 @@ class BinanceConfig {
 			BinanceApiClientFactory.newInstance(binanceCredentials.key, binanceCredentials.secret).newRestClient()
 
 	@Bean
-	fun binanceExchangeApi(binanceApiRestClient: BinanceApiRestClient, decimalConverter: (String) -> NumberFormat) =
+	fun binanceExchangeApi(binanceApiRestClient: BinanceApiRestClient, decimalConverter: (String, String) -> NumberFormat) =
 			BinanceExchange(binanceApiRestClient, decimalConverter)
 
 	@Bean
-	fun decimalConverter(binanceApiRestClient: BinanceApiRestClient): (String) -> NumberFormat = { symbol: String ->
-		binanceApiRestClient.exchangeInfo.symbols
-				.first { it.symbol == symbol }
-				.getSymbolFilter(FilterType.LOT_SIZE)
-				.stepSize
+	fun decimalConverter(lotSizeRepository: LotSizeRepository): (String, String) -> NumberFormat = { exchange: String, symbol: String ->
+		lotSizeRepository.findFirstByExchangeAndSymbolOrderByTimestampDesc(exchange, symbol)
+				.step
 				.substringBefore("1")
 				.replace("0", "#")
 				.plus("#")

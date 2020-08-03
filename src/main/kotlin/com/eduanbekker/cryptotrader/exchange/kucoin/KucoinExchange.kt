@@ -1,9 +1,9 @@
 package com.eduanbekker.cryptotrader.exchange.kucoin
 
 import com.eduanbekker.cryptotrader.exchange.ExchangeApi
+import com.eduanbekker.cryptotrader.exchange.LotSize
 import com.kucoin.sdk.KucoinRestClient
 import com.kucoin.sdk.rest.request.OrderCreateApiRequest
-import java.math.BigDecimal
 import java.util.*
 
 
@@ -36,5 +36,16 @@ class KucoinExchange(private val kucoinRestClient: KucoinRestClient) : ExchangeA
                 .symbol(symbol).type("market").clientOid(UUID.randomUUID().toString()).build()
         return kucoinRestClient.orderAPI().createOrder(request).orderId
     }
+
+	override fun getLotSize(symbol: String): LotSize =
+		kucoinRestClient.symbolAPI().symbols
+				.first { it.name == symbol }
+				.let {
+					LotSize(
+							minimum = it.baseMinSize.toDouble(),
+							maximum = it.baseMaxSize.toDouble(),
+							step = it.priceIncrement.toString()
+					)
+				}
 
 }

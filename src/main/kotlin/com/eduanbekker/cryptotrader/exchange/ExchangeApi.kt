@@ -21,4 +21,6 @@ interface ExchangeApi {
 	 * @return OrderId
 	 */
 	fun marketSellOrder(symbol: String, quantity: Double, price: Double?): String
+
+	fun getLotSize(symbol: String): LotSize
 }
