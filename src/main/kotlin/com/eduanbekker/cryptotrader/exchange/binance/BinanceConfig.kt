@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
-import java.util.*
 
 @Configuration
 @ConditionalOnBinance
@@ -28,7 +28,9 @@ class BinanceConfig {
 				.substringBefore("1")
 				.replace("0", "#")
 				.plus("#")
-				.let { DecimalFormat.getInstance(Locale.US) }
+				.let {
+					DecimalFormat(it, DecimalFormatSymbols().apply { decimalSeparator = '.' })
+				}
 				.also { it.roundingMode = RoundingMode.DOWN }
 	}
 }
