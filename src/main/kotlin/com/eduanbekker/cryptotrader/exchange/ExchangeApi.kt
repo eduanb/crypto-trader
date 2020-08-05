@@ -4,7 +4,7 @@ interface ExchangeApi {
 	fun getName(): String
 	fun getPrice(symbol: String): Double
 	fun getBalance(symbol: String): Double
-	fun getSymbols(): List<String>
+	fun getSymbols(): List<Symbol>
 
 	/**
 	 * Buys the symbol at the current market price

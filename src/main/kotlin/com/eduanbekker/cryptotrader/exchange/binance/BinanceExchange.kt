@@ -6,6 +6,7 @@ import com.binance.api.client.domain.account.NewOrderResponseType
 import com.binance.api.client.domain.general.FilterType
 import com.eduanbekker.cryptotrader.exchange.ExchangeApi
 import com.eduanbekker.cryptotrader.exchange.LotSize
+import com.eduanbekker.cryptotrader.exchange.Symbol
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.text.NumberFormat
@@ -29,7 +30,13 @@ class BinanceExchange(
 	override fun getBalance(symbol: String) =
 			binanceApiRestClient.account.getAssetBalance(symbol).free.toDouble()
 
-	override fun getSymbols() = exchangeInfo.symbols.map { it.symbol }
+	override fun getSymbols() = exchangeInfo.symbols.map {
+		Symbol(
+				symbol = it.symbol,
+				baseCurrency = it.baseAsset,
+				quoteCurrency = it.quoteAsset
+		)
+	}
 
 	override fun marketBuyOrder(symbol: String, quantity: Double, price: Double?): String =
 			binanceApiRestClient.newOrder(NewOrder.marketBuy(symbol, convertAndLog(symbol, quantity))

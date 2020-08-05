@@ -2,6 +2,7 @@ package com.eduanbekker.cryptotrader.exchange.kucoin
 
 import com.eduanbekker.cryptotrader.exchange.ExchangeApi
 import com.eduanbekker.cryptotrader.exchange.LotSize
+import com.eduanbekker.cryptotrader.exchange.Symbol
 import com.kucoin.sdk.KucoinRestClient
 import com.kucoin.sdk.rest.request.OrderCreateApiRequest
 import java.util.*
@@ -19,8 +20,14 @@ class KucoinExchange(private val kucoinRestClient: KucoinRestClient) : ExchangeA
         return kucoinRestClient.accountAPI().listAccounts(symbol, "trade")[1].balance.toDouble()
     }
 
-    override fun getSymbols(): List<String> {
-        return kucoinRestClient.symbolAPI().symbols.map { it.symbol }
+    override fun getSymbols(): List<Symbol> {
+        return kucoinRestClient.symbolAPI().symbols.map {
+			Symbol(
+					symbol = it.symbol,
+					baseCurrency = it.baseCurrency,
+					quoteCurrency = it.quoteCurrency
+			)
+		}
     }
 
     override fun marketBuyOrder(symbol: String, quantity: Double, price: Double?): String {
